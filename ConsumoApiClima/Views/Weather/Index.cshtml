@@ -1,0 +1,106 @@
+﻿@model DadosClima;
+
+<style>
+    body {
+        background: linear-gradient(135deg, #6e7dff, #ff5d8f);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .card-custom {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 1rem;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        padding: 2rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card-custom:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-custom {
+        width: 100%;
+        background-color: #6e7dff;
+        border: none;
+        color: white;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 0.375rem;
+    }
+
+    .btn-custom:hover {
+        background-color: #5a6bd9;
+        cursor: pointer;
+    }
+
+    .icon-custom {
+        font-size: 2rem;
+        margin-right: 1rem;
+    }
+</style>
+
+
+<div class="d-flex justify-content-center align-items-center w-100 h-100">
+    <div class="card-custom">
+        <h2 class="text-center mb-4">Previsão Do Tempo</h2>
+
+        <!--Formulário-->
+        <form method="get">
+            
+              <div class="mb-4">
+
+                <label for="cidade" class="form-label">Digite a Cidade</label>
+                <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Digite o nome da cidade" required>
+
+              </div>
+              <button type="submit" class="btn btn-custom">
+                  <i class="fas fa-search"></i>Buscar
+              </button>
+        </form>
+
+        <!--Dados Clima -->
+        @if (Model != null)
+        {
+            <div class="d-flex justify-content-center mb-4">
+                @if (Model.Condicao.Contains("sol"))
+                {
+                    <i class=" = "fas fa-sun icon-custom text-warning></i>
+                }
+                else if (Model.Condicao.Contains("chuva"))
+                {
+                    <i class=" = " fas fa-cloud-showers-heavy icon-custom text-info></i>
+                }
+                else if (Model.Condicao.Contains("nuvem"))
+                {
+                    <i class=" = " fas fa-cloud icon-custom text-secondary></i>
+                }
+                else
+                {
+                    <i class=" = " fas fa-cloud-sun icon-custom text-orange></i>
+                }
+            </div>
+
+            <!--Dados do Clima-->
+               <ul class="list-group">
+
+                  <li class="list-group-item "> <i class="fas fa-thermometer-half"></i> <strong>Temperatura:</strong> @(Model.Temperatura)</li>
+                  <li class="list-group-item "> <i class="fas fa-cloud-sun"></i> <strong>Condição:</strong> @(Model.Condicao)</li>
+                  <li class="list-group-item "> <i class="fas fa-tint"></i> <strong>Umidade:</strong> @(Model.Umidade)</li>
+                  <li class="list-group-item "> <i class="fas fa-wind"></i> <strong>Velocidade do Vento:</strong> @(Model.VelocidadeVento)</li>
+               </ul>
+         
+        }
+        @if(ViewBag.MensagemErro != null)
+        {
+           <p class="mb-4 text-center text-danger">@ViewBag.MensagemErro</p>
+        }
+        
+    </div>
+</div>
